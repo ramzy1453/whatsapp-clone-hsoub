@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../libs/zustand";
+import { getReceiverMessages } from "../../libs/filterMessages";
 
 const MessageItem = ({
   sender,
@@ -11,7 +12,10 @@ const MessageItem = ({
   id,
 }) => {
   const navigate = useNavigate();
-  const { socket } = useStore();
+  const { socket, messages } = useStore();
+  const contactMessages = getReceiverMessages(messages, id);
+  const lastMessage = contactMessages[contactMessages.length - 1];
+  console.log(contactMessages);
 
   const onClick = () => {
     setActifMessage();
@@ -37,7 +41,9 @@ const MessageItem = ({
       {/* Contenu du message */}
       <div>
         <p className="text-white font-semibold">{sender}</p>
-        <p className="text-white text-sm">{"Dernier Message"}</p>
+        <p className="text-white text-sm">
+          {lastMessage?.content || "Start conversation here..."}
+        </p>
       </div>
 
       {/* Horodatage du message */}

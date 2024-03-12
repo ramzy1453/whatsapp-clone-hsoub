@@ -1,0 +1,4 @@
+/ Last messages : ok
+/ Filter by seen : ok
+/ No user selected : ok
+/ fetch friend when login / register : en cours

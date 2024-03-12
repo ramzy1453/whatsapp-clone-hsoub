@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function ChatFooter() {
-  const { input, setInput, accessToken, socket } = useStore();
+  const { input, setInput, accessToken, socket, setLastMessages } = useStore();
   const { pathname: receiverId } = useLocation();
 
   const sendMessage = () => {

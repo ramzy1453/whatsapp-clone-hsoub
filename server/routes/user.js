@@ -13,7 +13,7 @@ const userRouter = express.Router();
 
 userRouter.post("/login", login);
 userRouter.post("/register", register);
-userRouter.get("/profile", getProfile);
+userRouter.get("/profile", isAuthenticated, getProfile);
 userRouter.get("/friends", isAuthenticated, getUsers);
 userRouter.put(
   "/",

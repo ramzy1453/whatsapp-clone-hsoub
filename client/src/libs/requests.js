@@ -42,6 +42,7 @@ export const getProfile = async () => {
 };
 
 export const getUsers = async () => {
+  console.log(accessToken, "localStorage");
   const response = await axios.get("/api/user/friends", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -77,8 +78,8 @@ export const createMessage = async (receiverId, content) => {
 
   return response.data;
 };
-export const getMessages = async (receiverId) => {
-  const response = await axios.get(`/api/message/${receiverId}`, {
+export const getMessages = async () => {
+  const response = await axios.get("/api/message/", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

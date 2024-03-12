@@ -4,11 +4,15 @@ import ChatHeader from "./ChatHeader";
 import ChatMessage from "./ChatMessage";
 import { useStore } from "../../libs/zustand";
 import { useLocation } from "react-router-dom";
+import { getReceiverMessages } from "../../libs/filterMessages";
 
 export default function Chat() {
   const messagesContainerRef = useRef(null);
   const { messages, user } = useStore();
+
   const { pathname } = useLocation();
+  const receiverId = pathname.slice(1);
+  const receiverMessages = getReceiverMessages(messages, receiverId);
 
   useEffect(() => {
     if (messagesContainerRef) {
@@ -32,7 +36,7 @@ export default function Chat() {
         className="px-8 py-6 flex-1 space-y-2 bg-[#0B141A] overflow-y-scroll h-8"
         ref={messagesContainerRef}
       >
-        {messages?.map((message, i) => (
+        {receiverMessages?.map((message, i) => (
           <ChatMessage
             key={i}
             {...message}

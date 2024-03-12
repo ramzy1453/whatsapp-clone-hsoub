@@ -71,6 +71,7 @@ export const login = async (req, res) => {
 
 export const getProfile = async (req, res) => {
   const userId = req.userId;
+  console.log(userId);
   const user = await User.findById(userId);
 
   user.password = undefined;
@@ -80,6 +81,7 @@ export const getProfile = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   const userId = req.userId;
+  console.log(userId);
 
   const users = await User.find({ _id: { $ne: userId } }).select("-password");
 

@@ -1,13 +1,18 @@
 import { FaSearch } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useStore } from "../../libs/zustand";
+import { useNavigate } from "react-router-dom";
 
 const ChatHeader = () => {
+  const navigate = useNavigate();
+
   const { currentReceiver, setAccessToken, setUser, typing } = useStore();
   const handleLogout = () => {
     setAccessToken(null);
     setUser(null);
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
   if (!currentReceiver) return null;

@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaUserFriends, FaCommentAlt, FaSearch } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 import MessageItem from "./MessageItem";
 import Profile from "../Profile";
 import { useStore } from "../../libs/zustand";
-import { getUsers } from "../../libs/requests";
 import Loading from "../Loading";
 import { useLocation } from "react-router-dom";
+import { getReceiverMessages } from "../../libs/filterMessages";
+import classNames from "classnames";
 
 export default function Sidebar() {
   const { user, setCurrentReceiver, friends, messages } = useStore();
@@ -17,11 +18,21 @@ export default function Sidebar() {
 
   const [actifMessage, setActifMessage] = useState(receiverId);
   const [showProfile, setShowProfile] = useState(false);
+  const [showUnSeenMessages, setShowUnSeenMessages] = useState(false);
   const [query, setQuery] = useState("");
 
   const handleSearch = ({ lastName, firstName }) => {
     const fullName = `${firstName} ${lastName}`;
     return fullName.toLowerCase().includes(query.toLowerCase().trim());
+  };
+
+  const unseenMessagesContacts = (contact) => {
+    if (!showUnSeenMessages) return true;
+    const contactMessages = getReceiverMessages(messages, contact._id);
+    const containUnseenMessages = contactMessages.some(
+      (message) => !message.seen
+    );
+    return containUnseenMessages;
   };
 
   if (showProfile) {
@@ -72,13 +83,24 @@ export default function Sidebar() {
           />
           <FaSearch className="absolute top-0 left-0 mt-3 ml-3 text-gray-400" />
         </div>
-        <button class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
-          <IoFilter size={16} color="#B0BAC0" className="cursor-pointer" />
+        <button
+          onClick={() =>
+            setShowUnSeenMessages((showUnSeenMessages) => !showUnSeenMessages)
+          }
+          className={classNames(
+            "justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all",
+            {
+              "bg-[#005C4B]": showUnSeenMessages,
+            }
+          )}
+        >
+          <IoFilter size={16} color="#B0BAC0" />
         </button>
       </div>
       <div>
         {friends ? (
           friends
+            .filter(unseenMessagesContacts)
             .filter(handleSearch)
             .map((friend) => (
               <MessageItem

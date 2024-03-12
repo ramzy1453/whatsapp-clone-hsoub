@@ -4,8 +4,6 @@ const user = JSON.parse(localStorage.getItem("user"));
 const accessToken = localStorage.getItem("accessToken");
 
 export const useStore = create((set) => ({
-  lastMessages: null,
-  setLastMessages: (lastMessages) => set({ lastMessages }),
   socket: null,
   setSocket: (socket) => set({ socket }),
   accessToken,
@@ -26,10 +24,12 @@ export const useStore = create((set) => ({
     }),
 
   setUser: (user) => {
+    localStorage.removeItem("user");
     localStorage.setItem("user", JSON.stringify(user));
     return set({ user });
   },
   setAccessToken: (accessToken) => {
+    localStorage.removeItem("accessToken");
     localStorage.setItem("accessToken", accessToken);
     return set({ accessToken });
   },

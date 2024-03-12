@@ -26,7 +26,7 @@ export default function Register() {
       setAccessToken(accessToken);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      alert(error.message);
     }
   };
 
@@ -75,7 +75,7 @@ export default function Register() {
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 p-3 rounded-md text-white font-semibold"
           >
-            {false ? "Loading..." : "Login"}
+            Register
           </button>
           <div className="mt-2 space-x-2">
             <span className="text-white">Already have an account? </span>
