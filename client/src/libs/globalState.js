@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const accessToken = localStorage.getItem("accessToken");
-
+console.log(user, accessToken);
 export const useStore = create((set) => ({
   socket: null,
   setSocket: (socket) => set({ socket }),

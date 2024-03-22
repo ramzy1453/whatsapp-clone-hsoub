@@ -1,6 +1,5 @@
-import { FaSearch } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useStore } from "../../libs/zustand";
+import { useStore } from "../../libs/globalState";
 import { useNavigate } from "react-router-dom";
 
 const ChatHeader = () => {
@@ -32,9 +31,6 @@ const ChatHeader = () => {
         </div>
       </div>
       <div className="flex space-x-4">
-        <button class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
-          <FaSearch size={16} color="#B0BAC0" className="cursor-pointer" />
-        </button>
         <button class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
           <IoLogOutOutline
             onClick={handleLogout}

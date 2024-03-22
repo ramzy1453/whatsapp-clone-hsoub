@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
-import { useStore } from "../libs/zustand";
+import { useStore } from "../libs/globalState";
 import io from "socket.io-client";
 import { getMessages, getUsers } from "../libs/requests";
 
 export default function Home() {
+  console.log("e - mc2");
   const {
     addMessage,
     setFriends,
@@ -69,8 +70,10 @@ export default function Home() {
     setSocket(socket);
 
     const fetchData = async () => {
-      const users = await getUsers();
-      const messages = await getMessages();
+      console.log("BEFORE FETCHING");
+      const users = await getUsers(accessToken);
+      console.log("after fetching", users);
+      const messages = await getMessages(accessToken);
       setFriends(users);
       setMessages(messages);
     };

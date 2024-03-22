@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Set a status...",
+      default: "",
     },
     lastOnline: {
       type: Date,

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import ChatFooter from "./ChatFooter";
 import ChatHeader from "./ChatHeader";
 import ChatMessage from "./ChatMessage";
-import { useStore } from "../../libs/zustand";
+import { useStore } from "../../libs/globalState";
 import { useLocation } from "react-router-dom";
 import { getReceiverMessages } from "../../libs/filterMessages";
 

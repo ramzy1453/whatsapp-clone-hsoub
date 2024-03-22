@@ -9,17 +9,12 @@ export const register = async (req, res) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "User already exists" });
+    return res.json({ error: "User already exists" });
   }
 
   if (password !== confirmPassword) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "Passwords don't match" });
+    return res.json({ error: "Passwords don't match" });
   }
-  console.log(req.body);
   const hashedPassword = await bcrypt.hash(password, 12);
 
   const user = await User.create({
@@ -27,6 +22,7 @@ export const register = async (req, res) => {
     firstName,
     email,
     password: hashedPassword,
+    profilePicture: defaultPicture,
   });
 
   user.password = undefined;
@@ -45,17 +41,13 @@ export const login = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "User doesn't exist" });
+    return res.json({ error: "User doesn't exist" });
   }
 
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
   if (!isPasswordCorrect) {
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .json({ message: "Invalid credentials" });
+    return res.json({ error: "Invalid credentials" });
   }
 
   user.password = undefined;

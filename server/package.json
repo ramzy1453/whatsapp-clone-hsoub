@@ -20,17 +20,14 @@
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.2",
-    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "node-fetch": "^3.2.10",
-    "nodemon": "^2.0.19",
     "package-lock.json": "^1.0.0",
     "package.json": "^2.0.1",
-    "react-modal": "^3.15.1",
     "socket.io": "^4.7.4"
   },
   "devDependencies": {
-    "concurrently": "^7.3.0"
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0"
   },
   "engines": {
     "node": "16.16.0",

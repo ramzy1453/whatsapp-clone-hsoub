@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useStore } from "../../libs/zustand";
+import { useStore } from "../../libs/globalState";
 import { getReceiverMessages } from "../../libs/filterMessages";
 
 const MessageItem = ({
@@ -31,22 +31,17 @@ const MessageItem = ({
         selected ? "bg-[#2A3942]" : "hover:bg-[#202C33]"
       }`}
     >
-      {/* Icône de l'utilisateur */}
       <img
         src={profilePicture}
         alt="profilePicture"
         className="w-10 h-10 rounded-full mr-4"
       />
-
-      {/* Contenu du message */}
       <div>
         <p className="text-white font-semibold">{sender}</p>
         <p className="text-white text-sm">
           {lastMessage?.content || "Start conversation here..."}
         </p>
       </div>
-
-      {/* Horodatage du message */}
       <div className="ml-auto text-gray-400">
         <p>{timestamp}</p>
       </div>

@@ -1,8 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8000";
-
-const accessToken = localStorage.getItem("accessToken");
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 export const register = async ({
   lastName,
@@ -31,7 +29,7 @@ export const login = async (email, password) => {
   return response.data;
 };
 
-export const getProfile = async () => {
+export const getProfile = async (accessToken) => {
   const response = await axios.get("/api/user/profile", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -41,8 +39,7 @@ export const getProfile = async () => {
   return response.data;
 };
 
-export const getUsers = async () => {
-  console.log(accessToken, "localStorage");
+export const getUsers = async (accessToken) => {
   const response = await axios.get("/api/user/friends", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -52,7 +49,7 @@ export const getUsers = async () => {
   return response.data;
 };
 
-export const updateUser = async (formData) => {
+export const updateUser = async (accessToken, formData) => {
   const response = await axios.put("/api/user", formData, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -62,7 +59,7 @@ export const updateUser = async (formData) => {
   return response.data;
 };
 
-export const createMessage = async (receiverId, content) => {
+export const createMessage = async (accessToken, { receiverId, content }) => {
   const response = await axios.post(
     "/api/message",
     {
@@ -78,18 +75,8 @@ export const createMessage = async (receiverId, content) => {
 
   return response.data;
 };
-export const getMessages = async () => {
+export const getMessages = async (accessToken) => {
   const response = await axios.get("/api/message/", {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  return response.data;
-};
-
-export const getLastMessages = async () => {
-  const response = await axios.get("/api/message/last", {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

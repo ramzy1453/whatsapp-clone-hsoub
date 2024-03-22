@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logoHsoub from "../assets/hsoub.png";
 import { login } from "../libs/requests";
-import { useStore } from "../libs/zustand";
+import { useStore } from "../libs/globalState";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -11,13 +11,13 @@ export default function Login() {
   const { setUser, setAccessToken } = useStore();
 
   const handleLogin = async () => {
-    try {
-      const { user, accessToken } = await login(email, password);
-      setUser(user);
-      setAccessToken(accessToken);
+    const response = await login(email, password);
+    if (response.error) {
+      alert(response.error);
+    } else {
+      setUser(response.user);
+      setAccessToken(response.accessToken);
       navigate("/");
-    } catch (error) {
-      alert(error.message);
     }
   };
 

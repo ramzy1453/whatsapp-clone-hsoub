@@ -4,7 +4,7 @@ import { IoMdSettings } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 import MessageItem from "./MessageItem";
 import Profile from "../Profile";
-import { useStore } from "../../libs/zustand";
+import { useStore } from "../../libs/globalState";
 import Loading from "../Loading";
 import { useLocation } from "react-router-dom";
 import { getReceiverMessages } from "../../libs/filterMessages";
@@ -42,34 +42,16 @@ export default function Sidebar() {
   return (
     <div className="flex-[1] bg-[#131B20] border-r border-[#a7a8a82f] h-full overflow-y-scroll">
       <div className="flex items-center justify-between bg-[#222C32] p-3 h-16">
-        <img
-          className="w-10 h-10 rounded-full cursor-pointer"
-          src={user.profilePicture}
-          alt="Avatar"
-          onClick={() => setShowProfile(true)}
-        />
-        <div className="flex space-x-6">
-          <button class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
-            <FaUserFriends
-              size={16}
-              color="#B0BAC0"
-              className="cursor-pointer"
-            />
-          </button>
-          <button class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
-            <FaCommentAlt
-              size={16}
-              color="#B0BAC0"
-              className="cursor-pointer"
-            />
-          </button>
-          <button class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
-            <IoMdSettings
-              size={16}
-              color="#B0BAC0"
-              className="cursor-pointer"
-            />
-          </button>
+        <div className="flex items-center justify-center">
+          <img
+            className="w-10 h-10 rounded-full cursor-pointer"
+            src={user.profilePicture}
+            alt="Avatar"
+            onClick={() => setShowProfile(true)}
+          />
+          <div className="ml-4">
+            <p className="text-white text-md">{`${user.firstName} ${user.lastName}`}</p>
+          </div>
         </div>
       </div>
       <div className="p-3 flex justify-between items-center space-x-3">

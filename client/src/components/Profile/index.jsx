@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import { IoMdReturnLeft } from "react-icons/io";
 import EditableInput from "./EditableInput";
-import { useStore } from "../../libs/zustand";
+import { useStore } from "../../libs/globalState";
 import { updateUser } from "../../libs/requests";
 
 export default function Profile({ onClose }) {
@@ -83,6 +83,7 @@ export default function Profile({ onClose }) {
             onChange={(e) => setStatus(e.target.value)}
             label="Status"
             id="status"
+            placeholder="Set a status..."
           />
         </form>
       </div>

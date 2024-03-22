@@ -1,5 +1,5 @@
 import { TbSend } from "react-icons/tb";
-import { useStore } from "../../libs/zustand";
+import { useStore } from "../../libs/globalState";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logoHsoub from "../assets/hsoub.png";
 import { register } from "../libs/requests";
-import { useStore } from "../libs/zustand";
+import { useStore } from "../libs/globalState";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -14,19 +14,19 @@ export default function Register() {
   const { setUser, setAccessToken } = useStore();
 
   const handleRegister = async () => {
-    try {
-      const { user, accessToken } = await register({
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-      });
-      setUser(user);
-      setAccessToken(accessToken);
+    const response = await register({
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (response.error) {
+      alert(response.error);
+    } else {
+      setUser(response.user);
+      setAccessToken(response.accessToken);
       navigate("/");
-    } catch (error) {
-      alert(error.message);
     }
   };
 
