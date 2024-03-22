@@ -17,6 +17,8 @@ export const register = async (req, res) => {
   }
   const hashedPassword = await bcrypt.hash(password, 12);
 
+  const defaultPicture = `http://${hostname}:${process.env.PORT}/uploads/default-picture.jpg`;
+
   const user = await User.create({
     lastName,
     firstName,
@@ -83,7 +85,7 @@ export const getUsers = async (req, res) => {
 export const updateUser = async (req, res) => {
   const userId = req.userId;
   const { lastName, firstName, status } = req.body;
-  const profilePicture = `http://localhost:8000/uploads/${req.file?.filename}`;
+  const profilePicture = `http://${hostname}:${process.env.PORT}/uploads/${req.file?.filename}`;
 
   const user = await User.findByIdAndUpdate(
     userId,
