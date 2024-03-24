@@ -1,12 +1,11 @@
+import io from "socket.io-client";
 import { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 import { useStore } from "../libs/globalState";
-import io from "socket.io-client";
 import { getMessages, getUsers } from "../libs/requests";
 
 export default function Home() {
-  console.log("e - mc2");
   const {
     addMessage,
     setFriends,
@@ -24,7 +23,7 @@ export default function Home() {
   } = useStore();
 
   useEffect(() => {
-    const socket = io("http://localhost:8000", {
+    const socket = io(process.env.REACT_APP_API_URL, {
       query: "token=" + accessToken,
     });
     socket.on("receive_message", (message) => {
@@ -40,14 +39,7 @@ export default function Home() {
     });
 
     socket.on("seen", (receiverId) => {
-      setMessages(
-        messages.map((message) => {
-          if (message.receiver === receiverId) {
-            return { ...message, seen: true };
-          }
-          return message;
-        })
-      );
+      console.log("Seen");
     });
 
     socket.on("user_updated", (updatedUser) => {
@@ -70,20 +62,22 @@ export default function Home() {
     setSocket(socket);
 
     const fetchData = async () => {
-      console.log("BEFORE FETCHING");
       const users = await getUsers(accessToken);
-      console.log("after fetching", users);
       const messages = await getMessages(accessToken);
+
       setFriends(users);
       setMessages(messages);
     };
-
     fetchData();
 
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   return (
     <div className="flex h-screen">

@@ -6,7 +6,7 @@ import { useStore } from "../../libs/globalState";
 import { updateUser } from "../../libs/requests";
 
 export default function Profile({ onClose }) {
-  const { user } = useStore();
+  const { user, accessToken } = useStore();
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [status, setStatus] = useState(user.status);
@@ -23,7 +23,7 @@ export default function Profile({ onClose }) {
         e.target.files[0].name
       );
 
-      await updateUser(formData);
+      await updateUser(accessToken, formData);
     }
   };
 
@@ -45,14 +45,14 @@ export default function Profile({ onClose }) {
       <div className="px-4 space-y-4">
         <div className="">
           <div className="flex items-center justify-center py-7 select-none">
-            <div class="relative w-[200px] h-[200px]">
+            <div className="relative w-[200px] h-[200px]">
               <img
                 src={image || user.profilePicture}
                 alt="Avatar"
                 className="w-full h-full rounded-full transition-opacity duration-300"
               />
               <div className="absolute cursor-pointer inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-300">
-                <div class="text-white flex flex-col items-center justify-center mx-2">
+                <div className="text-white flex flex-col items-center justify-center mx-2">
                   <FaCamera size={24} color="#B0BAC0" />
                   <p className="text-center">Change the profile picture</p>
                 </div>

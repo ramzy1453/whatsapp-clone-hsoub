@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { FaUserFriends, FaCommentAlt, FaSearch } from "react-icons/fa";
-import { IoMdSettings } from "react-icons/io";
+import { FaSearch } from "react-icons/fa";
 import { IoFilter } from "react-icons/io5";
 import MessageItem from "./MessageItem";
 import Profile from "../Profile";
@@ -81,21 +80,28 @@ export default function Sidebar() {
       </div>
       <div>
         {friends ? (
-          friends
-            .filter(unseenMessagesContacts)
-            .filter(handleSearch)
-            .map((friend) => (
-              <MessageItem
-                key={friend._id}
-                id={friend._id}
-                sender={`${friend.firstName} ${friend.lastName}`}
-                timestamp="12:00"
-                selected={friend._id === actifMessage}
-                profilePicture={friend.profilePicture}
-                setActifMessage={() => setActifMessage(friend._id)}
-                setCurrentReceiver={() => setCurrentReceiver(friend)}
-              />
-            ))
+          friends.length > 0 ? (
+            friends
+              .filter(unseenMessagesContacts)
+              .filter(handleSearch)
+              .map((friend) => (
+                <MessageItem
+                  key={friend._id}
+                  id={friend._id}
+                  sender={`${friend.firstName} ${friend.lastName}`}
+                  selected={friend._id === actifMessage}
+                  profilePicture={friend.profilePicture}
+                  setActifMessage={() => setActifMessage(friend._id)}
+                  setCurrentReceiver={() => {
+                    setCurrentReceiver(friend);
+                  }}
+                />
+              ))
+          ) : (
+            <div>
+              <p className="text-center text-gray-400">No contacts found</p>
+            </div>
+          )
         ) : (
           <Loading />
         )}

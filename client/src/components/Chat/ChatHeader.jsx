@@ -13,7 +13,6 @@ const ChatHeader = () => {
     localStorage.removeItem("user");
     navigate("/");
   };
-
   if (!currentReceiver) return null;
   return (
     <div className="flex items-center bg-[#222C32] justify-between h-16 p-3">
@@ -31,7 +30,7 @@ const ChatHeader = () => {
         </div>
       </div>
       <div className="flex space-x-4">
-        <button class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
+        <button className="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all">
           <IoLogOutOutline
             onClick={handleLogout}
             size={20}

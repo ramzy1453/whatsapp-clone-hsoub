@@ -10,7 +10,6 @@ import isAuthenticated, {
   isSocketAuthenticated,
 } from "./middlewares/isAuthenticated.js";
 import messageRouter from "./routes/message.js";
-import connectSocket from "./socket.js";
 import { Server } from "socket.io";
 import Message from "./models/Message.js";
 import User from "./models/User.js";
@@ -18,7 +17,7 @@ import User from "./models/User.js";
 // Server
 const app = express();
 const server = http.createServer(app);
-console.log(path.join(path.resolve(), "public"));
+
 // Middlewares
 app.use(express.json());
 app.use(express.static(path.join(path.resolve(), "public")));
@@ -63,9 +62,18 @@ io.on("connection", async (socket) => {
     socket.to(receiverId).emit("stop_typing", socket.userId);
   });
 
+  async function getUsername(id) {
+    return await User.findById(id).select("firstName lastName").exec();
+  }
   socket.on("seen", async (senderId) => {
     const receiverId = socket.userId;
-
+    const receiverFullNameObject = await getUsername(receiverId);
+    const receiverFullName = `${receiverFullNameObject.firstName} ${receiverFullNameObject.lastName}`;
+    const senderFullNameObject = await getUsername(senderId);
+    const senderFullName = `${senderFullNameObject.firstName} ${senderFullNameObject.lastName}`;
+    console.log(
+      `User ${receiverFullName} has seen the messages from ${senderFullName}`
+    );
     await Message.updateMany(
       { senderId, receiverId, seen: false },
       { seen: true },

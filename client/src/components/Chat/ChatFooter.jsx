@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function ChatFooter() {
-  const { input, setInput, accessToken, socket, setLastMessages } = useStore();
+  const { input, setInput, accessToken, socket } = useStore();
   const { pathname: receiverId } = useLocation();
 
   const sendMessage = () => {
@@ -36,10 +36,10 @@ export default function ChatFooter() {
   };
   return (
     <>
-      <label for="chat" class="sr-only">
+      <label htmlFor="chat" className="sr-only">
         Your message
       </label>
-      <div class="flex items-center bg-[#202C33] shadow-xl py-2 px-3 space-x-2">
+      <div className="flex items-center bg-[#202C33] shadow-xl py-2 px-3 space-x-2">
         <textarea
           id="chat"
           value={input}
@@ -50,7 +50,7 @@ export default function ChatFooter() {
           onKeyDown={handleKeyDown}
         ></textarea>
         <button
-          class="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all"
+          className="justify-center rounded-full p-1 cursor-pointer active:bg-[#005C4B] transition-all"
           onClick={sendMessage}
         >
           <TbSend size={24} color="white" />

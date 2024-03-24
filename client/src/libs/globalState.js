@@ -2,7 +2,8 @@ import { create } from "zustand";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const accessToken = localStorage.getItem("accessToken");
-console.log(user, accessToken);
+const currentReceiver = JSON.parse(localStorage.getItem("currentReceiver"));
+
 export const useStore = create((set) => ({
   socket: null,
   setSocket: (socket) => set({ socket }),
@@ -24,12 +25,10 @@ export const useStore = create((set) => ({
     }),
 
   setUser: (user) => {
-    localStorage.removeItem("user");
     localStorage.setItem("user", JSON.stringify(user));
     return set({ user });
   },
   setAccessToken: (accessToken) => {
-    localStorage.removeItem("accessToken");
     localStorage.setItem("accessToken", accessToken);
     return set({ accessToken });
   },
@@ -42,6 +41,9 @@ export const useStore = create((set) => ({
       return { messages: [...messages, message] };
     });
   },
-  currentReceiver: null,
-  setCurrentReceiver: (currentReceiver) => set({ currentReceiver }),
+  currentReceiver,
+  setCurrentReceiver: (currentReceiver) => {
+    localStorage.setItem("currentReceiver", JSON.stringify(currentReceiver));
+    return set({ currentReceiver });
+  },
 }));

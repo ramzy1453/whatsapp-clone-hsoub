@@ -1,8 +1,12 @@
+import "dotenv/config";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { createToken } from "../utils/jwt.js";
 import { io } from "../index.js";
+
+const hostname = process.env.hostname;
+const port = process.env.PORT;
 
 export const register = async (req, res) => {
   const { lastName, firstName, email, password, confirmPassword } = req.body;
@@ -17,7 +21,7 @@ export const register = async (req, res) => {
   }
   const hashedPassword = await bcrypt.hash(password, 12);
 
-  const defaultPicture = `http://${hostname}:${process.env.PORT}/uploads/default-picture.jpg`;
+  const defaultPicture = `http://${hostname}:${port}/uploads/default-picture.jpg`;
 
   const user = await User.create({
     lastName,
@@ -85,7 +89,7 @@ export const getUsers = async (req, res) => {
 export const updateUser = async (req, res) => {
   const userId = req.userId;
   const { lastName, firstName, status } = req.body;
-  const profilePicture = `http://${hostname}:${process.env.PORT}/uploads/${req.file?.filename}`;
+  const profilePicture = `http://${hostname}:${port}/uploads/${req.file?.filename}`;
 
   const user = await User.findByIdAndUpdate(
     userId,
