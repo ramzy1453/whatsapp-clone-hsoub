@@ -2,7 +2,6 @@ import { Button, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 export default function Community({ navigation }) {
-  console.log(navigation);
   return (
     <View style={styles.container}>
       <View

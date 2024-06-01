@@ -16,6 +16,21 @@ export default function Navigation() {
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Messages"
+        component={Messages}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#0e806a",
+          },
+          headerTitleStyle: {
+            color: "white",
+          },
+          headerTintColor: "white",
+        }}
+      />
     </Stack.Navigator>
   );
 }

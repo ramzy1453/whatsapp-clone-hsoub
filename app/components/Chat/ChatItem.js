@@ -2,22 +2,32 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
+import { getReceiverMessages } from "../../libs/filterMessages";
+import { useStore } from "../../libs/globalState";
 
 export default function ChatItem({
-  id,
+  _id,
   firstName,
   lastName,
-  lastMessage,
   profilePicture,
   createdAt,
 }) {
-  const navigate = useNavigation();
-  const totalUnread = parseInt(Math.random() * 4);
+  const navigation = useNavigation();
+  const { messages } = useStore();
+
+  const contactMessages = getReceiverMessages(messages, _id);
+  const lastMessage = contactMessages[contactMessages.length - 1];
+
+  const totalUnread =
+    contactMessages.filter(
+      (message) => !message.seen && message.receiverId !== _id
+    ) + parseInt(Math.random() * 15);
+
   return (
     <TouchableOpacity
       onPress={() => {
-        navigate.navigate("Messages", {
-          id,
+        navigation.navigate("Messages", {
+          _id,
           firstName,
           lastName,
           profilePicture,
@@ -34,14 +44,25 @@ export default function ChatItem({
             <Text>
               {firstName} {lastName}
             </Text>
-            <Text>{lastMessage}</Text>
+            <Text
+              style={[
+                styles.lastMessage,
+                {
+                  color: !lastMessage ? "#9e9e9e" : "black",
+                },
+              ]}
+            >
+              {lastMessage?.content || "Start the discussion..."}
+            </Text>
           </View>
         </View>
         <View style={styles.unreadMessageContainer}>
           <Text>{moment(createdAt).format("hh:mm A")}</Text>
           {totalUnread > 0 && (
             <View style={styles.totalUnread}>
-              <Text style={{ color: "white" }}>{totalUnread}</Text>
+              <Text style={{ color: "white" }}>
+                {totalUnread < 9 ? totalUnread : "+9"}
+              </Text>
             </View>
           )}
         </View>
@@ -62,6 +83,7 @@ const styles = StyleSheet.create({
   chatContainer: {
     flexDirection: "row",
     alignItems: "center",
+    flex: 1,
   },
   image: {
     width: 60,
@@ -74,14 +96,22 @@ const styles = StyleSheet.create({
   unreadMessageContainer: {
     flexDirection: "column",
     alignItems: "flex-end",
+    flex: 1,
   },
   totalUnread: {
     backgroundColor: "#0e806a",
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 4,
+  },
+  lastMessage: {
+    color: "#9e9e9e",
+    width: 200,
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
   },
 });

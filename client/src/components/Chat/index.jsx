@@ -16,16 +16,12 @@ export default function Chat() {
 
   useEffect(() => {
     if (messagesContainerRef) {
-      messagesContainerRef.current.addEventListener(
-        "DOMNodeInserted",
-        (event) => {
-          const { currentTarget } = event;
-          currentTarget.scroll({
-            top: currentTarget.scrollHeight,
-            behavior: "smooth",
-          });
-        }
-      );
+      messagesContainerRef.current.addEventListener("DOMNodeInserted", (e) => {
+        e.currentTarget.scroll({
+          top: e.currentTarget.scrollHeight,
+          behavior: "smooth",
+        });
+      });
     }
   }, []);
 

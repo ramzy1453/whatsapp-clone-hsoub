@@ -14,7 +14,6 @@ export default function ChatFooter() {
         receiverId: receiverId.slice(1),
         content: input,
       });
-
       setInput("");
     }
   };

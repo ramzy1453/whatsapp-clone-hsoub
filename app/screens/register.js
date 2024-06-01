@@ -55,14 +55,17 @@ export default function Register({ navigation }) {
         placement: "top",
       });
     } else {
-      const response = await register({
-        firstName: formik.values.firstName,
-        lastName: formik.values.lastName,
-        email: formik.values.email,
-        password: formik.values.password,
-        confirmPassword: formik.values.confirmPassword,
-      });
-      console.log(response);
+      const response = await register(formik.values);
+
+      if (response.error) {
+        Toast.show({
+          title: response.error,
+          status: "error",
+          backgroundColor: "#ff5252",
+          placement: "top",
+        });
+        return;
+      }
       Toast.show({
         title: "Login successful",
         status: "success",

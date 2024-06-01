@@ -13,7 +13,6 @@ const MessageItem = ({
   const navigate = useNavigate();
   const { socket, messages, setMessages } = useStore();
   const contactMessages = getReceiverMessages(messages, id);
-  console.log(contactMessages);
   const lastMessage = contactMessages[contactMessages.length - 1];
 
   const unreadMessages = contactMessages.filter(

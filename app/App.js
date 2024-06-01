@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation";
@@ -8,12 +8,12 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <View style={styles.mainContainer}>
+        <SafeAreaView style={styles.mainContainer}>
           <StatusBar backgroundColor="#0e806a" style="auto" />
           <View style={styles.container}>
             <Navigation />
           </View>
-        </View>
+        </SafeAreaView>
       </NavigationContainer>
     </NativeBaseProvider>
   );

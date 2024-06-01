@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { useStore } from "../libs/globalState.js";
 import {
   Feather,
   Fontisto,
@@ -6,10 +7,13 @@ import {
 } from "react-native-vector-icons";
 
 export default function Header() {
+  const { user } = useStore();
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>WhatsApp</Text>
+        <Text style={styles.headerText}>
+          {user.firstName} {user.lastName}
+        </Text>
         <View style={styles.iconsContainer}>
           <Feather name="camera" color="white" style={styles.icon} size={20} />
           <Fontisto name="search" color="white" style={styles.icon} size={20} />
@@ -28,7 +32,7 @@ export default function Header() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#0e806a",
-    paddingTop: 80,
+    paddingTop: 40,
     paddingBottom: 8,
   },
   headerContainer: {

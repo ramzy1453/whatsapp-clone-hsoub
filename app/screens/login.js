@@ -11,11 +11,15 @@ import {
   HStack,
   Toast,
 } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { login } from "../libs/requests";
+import { useStore } from "../libs/globalState";
 
-export default function Login({ navigation }) {
+export default function Login() {
+  const navigation = useNavigation();
+  const { setAccessToken, setUser } = useStore();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -42,13 +46,29 @@ export default function Login({ navigation }) {
       });
     } else {
       const response = await login(formik.values.email, formik.values.password);
-      console.log(response);
+
+      if (response.error) {
+        Toast.show({
+          title: response.error,
+          status: "error",
+          backgroundColor: "#ff5252",
+          placement: "top",
+        });
+        return;
+      }
+
+      const { user, accessToken, message } = response;
+
       Toast.show({
-        title: "Login successful",
+        title: message,
         status: "success",
         backgroundColor: "#0e806a",
         placement: "top",
       });
+
+      setUser(user);
+      setAccessToken(accessToken);
+      navigation.navigate("Home");
     }
   };
   return (

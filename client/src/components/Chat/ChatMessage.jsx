@@ -1,7 +1,7 @@
 import cn from "classnames";
 import moment from "moment";
 
-export default function ChatMessage({ content, createdAt, seen, isSender }) {
+export default function ChatMessage({ content, createdAt, isSender }) {
   return (
     <div
       className={cn("flex", {
