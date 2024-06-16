@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, LogBox, FlatList } from "react-native";
 import React, { useEffect, useRef } from "react";
 import MessageItem from "../../components/Chat/MessageItem";
 import MessageFooter from "../../components/Chat/MessageFooter";
@@ -8,7 +8,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Messages() {
-  const { messages, user, socket } = useStore();
+  const { messages, user } = useStore();
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -22,6 +22,10 @@ export default function Messages() {
   useEffect(() => {
     navigation.setOptions({ title: `${firstName} ${lastName}` });
   }, [routes.params.name]);
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>

@@ -8,7 +8,7 @@ export default function ChatItem({
   _id,
   firstName,
   lastName,
-  profilePicture,
+  profilePicture: pp,
   createdAt,
 }) {
   const navigation = useNavigation();
@@ -22,6 +22,8 @@ export default function ChatItem({
   ).length;
 
   console.log(profilePicture);
+
+  const profilePicture = pp.replace("localhost", "192.168.1.8");
 
   return (
     <TouchableOpacity

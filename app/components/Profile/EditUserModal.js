@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useRef, useState } from "react";
-import { Button, FormControl, HStack, Input, Modal } from "native-base";
+import { StyleSheet } from "react-native";
+import { useRef } from "react";
+import { Button, FormControl, Input, Modal } from "native-base";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { updateUser } from "../../libs/requests";
@@ -35,6 +35,7 @@ export default function EditUserModal({ modalVisible, closeModal }) {
       onClose={closeModal}
       initialFocusRef={initialRef}
       finalFocusRef={finalRef}
+      avoidKeyboard
     >
       <Modal.Content>
         <Modal.CloseButton />

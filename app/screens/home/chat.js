@@ -7,7 +7,7 @@ import { useStore } from "../../libs/globalState";
 export default function Chat() {
   const { friends } = useStore();
   return (
-    <View contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <FlatList
         data={friends}
         keyExtractor={(item, i) => i.toString()}
