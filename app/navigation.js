@@ -25,6 +25,7 @@ export default function Navigation() {
         setUser(JSON.parse(user));
       }
     };
+    logout();
     fetchData();
   }, []);
 

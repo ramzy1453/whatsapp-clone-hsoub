@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Chat from "./chat";
 import Community from "./community";
-import Status from "./status";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import Header from "../../components/Header";
 import { useStore } from "../../libs/globalState";
@@ -11,6 +10,7 @@ import io from "socket.io-client";
 import { getMessages, getUsers } from "../../libs/requests";
 import Profile from "./profile";
 
+console.log({ expoApi: process.env.EXPO_PUBLIC_API_URL });
 const backendUrl = "http://192.168.1.8:8000" || "http://192.168.1.8:8000";
 
 const TopTab = createMaterialTopTabNavigator();
@@ -50,8 +50,8 @@ export default function Home() {
       setTyping(false);
     });
 
-    socket.on("seen", (receiverId) => {
-      console.log("Seen", receiverId);
+    socket.on("seen", (senderId) => {
+      setMessages(senderId);
     });
 
     socket.on("user_updated", (updatedUser) => {

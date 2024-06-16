@@ -10,12 +10,6 @@ export default function MessageItem({
   seen,
   isSender,
 }) {
-  const { socket } = useStore();
-
-  useEffect(() => {
-    socket.emit("seen", _id);
-  }, []);
-
   return (
     <View
       style={[

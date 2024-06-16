@@ -8,7 +8,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Messages() {
-  const { messages, user } = useStore();
+  const { messages, user, socket } = useStore();
 
   const routes = useRoute();
   const navigation = useNavigation();

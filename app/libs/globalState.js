@@ -1,12 +1,11 @@
 import { create } from "zustand";
-import { chataData } from "./chatdata";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useStore = create((set) => ({
   socket: null,
   accessToken: "",
   user: null,
-  friends: chataData,
+  friends: [],
   typing: null,
   input: "",
   currentReceiver: {},

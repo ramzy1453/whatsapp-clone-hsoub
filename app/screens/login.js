@@ -20,7 +20,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 export default function Login() {
   const navigation = useNavigation();
-  const { setAccessToken, setUser } = useStore();
+  const { setAccessToken, setUser, user } = useStore();
+  console.log({ fromLogin: user });
   const formik = useFormik({
     initialValues: {
       email: "",

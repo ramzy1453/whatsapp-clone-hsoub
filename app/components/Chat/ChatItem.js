@@ -12,20 +12,20 @@ export default function ChatItem({
   createdAt,
 }) {
   const navigation = useNavigation();
-  const { messages } = useStore();
+  const { messages, socket } = useStore();
 
   const contactMessages = getReceiverMessages(messages, _id);
   const lastMessage = contactMessages[contactMessages.length - 1];
 
-  const totalUnread = contactMessages.filter(
+  const unreadMessages = contactMessages.filter(
     (message) => !message.seen && message.receiverId !== _id
   ).length;
 
   const profilePicture = pp.replace("localhost", "192.168.1.8");
-
   return (
     <TouchableOpacity
       onPress={() => {
+        socket?.emit("seen", _id);
         navigation.navigate("Messages", {
           _id,
           firstName,
@@ -55,10 +55,10 @@ export default function ChatItem({
         </View>
         <View style={styles.unreadMessageContainer}>
           <Text>{moment(createdAt).format("hh:mm A")}</Text>
-          {totalUnread > 0 && (
-            <View style={styles.totalUnread}>
+          {unreadMessages > 0 && (
+            <View style={styles.unreadMessages}>
               <Text style={{ color: "white" }}>
-                {totalUnread < 9 ? totalUnread : "+9"}
+                {unreadMessages < 9 ? unreadMessages : "+9"}
               </Text>
             </View>
           )}
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     flex: 1,
   },
-  totalUnread: {
+  unreadMessages: {
     backgroundColor: "#0e806a",
     width: 25,
     height: 25,
