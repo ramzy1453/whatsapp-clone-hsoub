@@ -1,4 +1,4 @@
-import { StyleSheet, Image, View } from "react-native";
+import { StyleSheet, Image, View, KeyboardAvoidingView } from "react-native";
 import {
   Box,
   Text,
@@ -16,6 +16,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { login } from "../libs/requests";
 import { useStore } from "../libs/globalState";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -65,14 +66,13 @@ export default function Login() {
         backgroundColor: "#0e806a",
         placement: "top",
       });
-
       setUser(user);
       setAccessToken(accessToken);
       navigation.navigate("Home");
     }
   };
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Box safeArea w="90%" maxW="290">
         <Image
           source={require("../assets/images/hsoub.png")}
@@ -123,7 +123,7 @@ export default function Login() {
           </HStack>
         </VStack>
       </Box>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

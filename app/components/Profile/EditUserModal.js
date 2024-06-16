@@ -9,28 +9,22 @@ import { useStore } from "../../libs/globalState";
 export default function EditUserModal({ modalVisible, closeModal }) {
   const initialRef = useRef(null);
   const finalRef = useRef(null);
-  const { accessToken, user } = useStore();
+  const { accessToken, user, setUser } = useStore();
 
   const formik = useFormik({
     initialValues: {
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email,
       status: user.status,
     },
     validationSchema: Yup.object({
       firstName: Yup.string(),
       lastName: Yup.string(),
-      email: Yup.string().email("Invalid email address"),
       status: Yup.string(),
     }),
     async onSubmit(values) {
-      const user = await updateUser(accessToken, {
-        ...values,
-        profilePicture:
-          "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-      });
-
+      const user = await updateUser(accessToken, values);
+      setUser(user);
       closeModal();
     },
   });
@@ -59,13 +53,6 @@ export default function EditUserModal({ modalVisible, closeModal }) {
             <Input
               value={formik.values.lastName}
               onChangeText={formik.handleChange("lastName")}
-            />
-          </FormControl>
-          <FormControl mt="3">
-            <FormControl.Label>Email</FormControl.Label>
-            <Input
-              value={formik.values.email}
-              onChangeText={formik.handleChange("email")}
             />
           </FormControl>
           <FormControl mt="3">

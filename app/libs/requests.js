@@ -1,6 +1,9 @@
 import axios from "axios";
+import * as FileSystem from "expo-file-system";
 
-axios.defaults.baseURL = "http://192.168.1.8:8000";
+// 172.25.10.100
+const baseURL = "http://192.168.1.8:8000";
+axios.defaults.baseURL = baseURL;
 
 export const register = async ({
   lastName,
@@ -49,14 +52,31 @@ export const getUsers = async (accessToken) => {
   return response.data;
 };
 
-export const updateUser = async (accessToken, formData) => {
-  const response = await axios.put("/api/user", formData, {
+export const updateUser = async (accessToken, body) => {
+  const response = await axios.put("/api/user", body, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   });
 
   return response.data;
+};
+
+export const uploadImage = async (accessToken, imageUri) => {
+  const response = FileSystem.uploadAsync(
+    `${baseURL}/api/user/profile-picture`,
+    imageUri,
+    {
+      httpMethod: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: "profilePicture",
+      mimeType: "image/jpeg",
+    }
+  );
+  return response;
 };
 
 export const createMessage = async (accessToken, { receiverId, content }) => {

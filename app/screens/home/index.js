@@ -11,9 +11,10 @@ import io from "socket.io-client";
 import { getMessages, getUsers } from "../../libs/requests";
 import Profile from "./profile";
 
-const backendUrl = process.env.REACT_APP_API_URL || "http://192.168.1.8:8000";
+const backendUrl = "http://192.168.1.8:8000" || "http://192.168.1.8:8000";
 
 const TopTab = createMaterialTopTabNavigator();
+
 export default function Home() {
   const {
     addMessage,
@@ -86,9 +87,7 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
+  useEffect(() => {}, [messages]);
 
   return (
     <>

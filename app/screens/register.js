@@ -2,8 +2,10 @@ import {
   StyleSheet,
   Keyboard,
   KeyboardAvoidingView,
-  Image,
   View,
+  Image,
+  Platform,
+  ScrollView,
 } from "react-native";
 
 import { useFormik } from "formik";
@@ -20,9 +22,12 @@ import {
   HStack,
   Toast,
 } from "native-base";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useNavigation } from "@react-navigation/native";
 import { register } from "../libs/requests";
 
-export default function Register({ navigation }) {
+export default function Register() {
+  const navigation = useNavigation();
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -72,13 +77,15 @@ export default function Register({ navigation }) {
         backgroundColor: "#0e806a",
         placement: "top",
       });
+
+      navigation.navigate("Home");
     }
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Box safeArea w="90%" maxW="290">
-        <KeyboardAvoidingView>
+        <View>
           <Image
             source={require("../assets/images/hsoub.png")}
             style={styles.logo}
@@ -149,9 +156,9 @@ export default function Register({ navigation }) {
               </Link>
             </HStack>
           </VStack>
-        </KeyboardAvoidingView>
+        </View>
       </Box>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

@@ -1,15 +1,31 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React, { useState } from "react";
 import { useStore } from "../../libs/globalState";
 import { Button } from "native-base";
 import EditUserModal from "../../components/Profile/EditUserModal";
+import * as ImagePicker from "expo-image-picker";
+import { uploadImage } from "../../libs/requests";
 
 export default function Profile() {
-  const { user } = useStore();
+  const { user, accessToken } = useStore();
   const { lastName, firstName, email, profilePicture: pp, status } = user;
   const actualStatus = status || "No status";
   const profilePicture = pp.replace("localhost", "192.168.1.8");
-  console.log(profilePicture);
+
+  console.log("change occured", profilePicture);
+
+  // Stores the selected image URI
+  const [file, setFile] = useState(profilePicture);
+
+  // Stores any error message
+  const [error, setError] = useState(null);
 
   const [modalVisible, setModalVisible] = useState(false);
   const closeModal = () => {
@@ -18,11 +34,47 @@ export default function Profile() {
   const openModal = () => {
     setModalVisible(true);
   };
+
+  // Function to pick an image from
+  //the device's media library
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status !== "granted") {
+      // If permission is denied, show an alert
+      Alert.alert(
+        "Permission Denied",
+        `Sorry, we need camera  
+                   roll permission to upload images.`
+      );
+    } else {
+      // Launch the image library and get
+      // the selected image
+      const result = await ImagePicker.launchImageLibraryAsync();
+
+      if (!result.canceled) {
+        // If an image is selected (not cancelled),
+        // update the file state variable
+
+        const localUri = result.assets[0].uri;
+
+        setFile(localUri);
+
+        const response = await uploadImage(accessToken, localUri);
+
+        // Clear any previous errors
+        setError(null);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <EditUserModal modalVisible={modalVisible} closeModal={closeModal} />
       <View style={styles.imageContainer}>
-        <Image source={{ uri: profilePicture }} style={styles.profilePicture} />
+        <TouchableOpacity onPress={pickImage}>
+          <Image source={{ uri: file }} style={styles.profilePicture} />
+        </TouchableOpacity>
       </View>
       <View style={styles.subContainer}>
         <View style={styles.labelContainer}>

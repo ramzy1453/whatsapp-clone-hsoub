@@ -1,29 +1,32 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useStore } from "../libs/globalState.js";
-import {
-  Feather,
-  Fontisto,
-  MaterialCommunityIcons,
-} from "react-native-vector-icons";
+import { MaterialIcons } from "react-native-vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Header() {
   const { user } = useStore();
+  const navigation = useNavigation();
+  const handleLogout = () => {
+    navigation.navigate("Login");
+  };
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text style={styles.headerText}>
           {user.firstName} {user.lastName}
         </Text>
-        <View style={styles.iconsContainer}>
-          <Feather name="camera" color="white" style={styles.icon} size={20} />
-          <Fontisto name="search" color="white" style={styles.icon} size={20} />
-          <MaterialCommunityIcons
-            name="dots-vertical"
-            color="white"
-            style={styles.icon}
-            size={21}
-          />
-        </View>
+        <MaterialIcons
+          name="logout"
+          color="white"
+          style={styles.icon}
+          size={21}
+          onPress={handleLogout}
+        />
       </View>
     </View>
   );
@@ -45,10 +48,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "white",
     fontWeight: "500",
-  },
-  iconsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
   },
   icon: {
     fontSize: 20,

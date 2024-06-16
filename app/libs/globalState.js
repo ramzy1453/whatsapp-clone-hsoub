@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { chataData } from "./chatdata";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useStore = create((set) => ({
   socket: null,
   accessToken: "",
-  user: {},
+  user: null,
   friends: chataData,
   typing: null,
   input: "",
@@ -24,10 +25,16 @@ export const useStore = create((set) => ({
       return { friends: [...friends] };
     }),
 
-  setUser: (user) => {
+  setUser: async (user) => {
+    if (user) {
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+    }
     return set({ user });
   },
-  setAccessToken: (accessToken) => {
+  setAccessToken: async (accessToken) => {
+    if (accessToken) {
+      await AsyncStorage.setItem("accessToken", accessToken);
+    }
     return set({ accessToken });
   },
   setInput: (input) => set({ input }),
@@ -39,5 +46,10 @@ export const useStore = create((set) => ({
   },
   setCurrentReceiver: (currentReceiver) => {
     return set({ currentReceiver });
+  },
+  logout: async () => {
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("user");
+    set({ user: null, accessToken: null });
   },
 }));

@@ -18,10 +18,9 @@ export default function ChatItem({
   const contactMessages = getReceiverMessages(messages, _id);
   const lastMessage = contactMessages[contactMessages.length - 1];
 
-  const totalUnread =
-    contactMessages.filter(
-      (message) => !message.seen && message.receiverId !== _id
-    ) + parseInt(Math.random() * 15);
+  const totalUnread = contactMessages.filter(
+    (message) => !message.seen && message.receiverId !== _id
+  ).length;
 
   return (
     <TouchableOpacity

@@ -7,7 +7,7 @@ import { getReceiverMessages } from "../../libs/filterMessages";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function Messages() {
-  const { messages, user } = useStore();
+  const { messages, user, socket } = useStore();
 
   const routes = useRoute();
   const navigation = useNavigation();
