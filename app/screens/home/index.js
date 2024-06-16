@@ -77,6 +77,8 @@ export default function Home() {
       const users = await getUsers(accessToken);
       const messages = await getMessages(accessToken);
 
+      console.log(users.length, messages.length);
+
       setFriends(users);
       setMessages(messages);
     };

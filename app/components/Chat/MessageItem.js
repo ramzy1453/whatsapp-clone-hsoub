@@ -13,7 +13,7 @@ export default function MessageItem({
   const { socket } = useStore();
 
   useEffect(() => {
-    socket.emit("message_seen", _id);
+    socket.emit("seen", _id);
   }, []);
 
   return (

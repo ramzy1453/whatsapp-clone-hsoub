@@ -21,8 +21,6 @@ export default function ChatItem({
     (message) => !message.seen && message.receiverId !== _id
   ).length;
 
-  console.log(profilePicture);
-
   const profilePicture = pp.replace("localhost", "192.168.1.8");
 
   return (

@@ -46,7 +46,7 @@ export default function Profile() {
       Alert.alert(
         "Permission Denied",
         `Sorry, we need camera  
-                   roll permission to upload images.`
+        roll permission to upload images.`
       );
     } else {
       // Launch the image library and get
