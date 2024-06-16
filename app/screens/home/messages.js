@@ -5,6 +5,7 @@ import MessageFooter from "../../components/Chat/MessageFooter";
 import { useStore } from "../../libs/globalState";
 import { getReceiverMessages } from "../../libs/filterMessages";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Messages() {
   const { messages, user, socket } = useStore();
@@ -23,7 +24,7 @@ export default function Messages() {
   }, [routes.params.name]);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <FlatList
         data={filtredMessages}
         ref={flatListRef}
@@ -38,7 +39,7 @@ export default function Messages() {
           flatListRef.current.scrollToEnd({ animated: true });
         }}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

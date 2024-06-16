@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
-import { useStore } from "../../libs/globalState";
+import { useState } from "react";
 import { Button } from "native-base";
-import EditUserModal from "../../components/Profile/EditUserModal";
 import * as ImagePicker from "expo-image-picker";
+import EditUserModal from "../../components/Profile/EditUserModal";
+import { useStore } from "../../libs/globalState";
 import { uploadImage } from "../../libs/requests";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function Profile() {
   const { user, accessToken } = useStore();
@@ -69,7 +70,7 @@ export default function Profile() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <EditUserModal modalVisible={modalVisible} closeModal={closeModal} />
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={pickImage}>
@@ -101,7 +102,7 @@ export default function Profile() {
           Edit Profile
         </Button>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

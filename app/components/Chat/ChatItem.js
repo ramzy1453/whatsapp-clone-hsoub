@@ -1,5 +1,4 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import { getReceiverMessages } from "../../libs/filterMessages";
@@ -22,6 +21,8 @@ export default function ChatItem({
     (message) => !message.seen && message.receiverId !== _id
   ).length;
 
+  console.log(profilePicture);
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -35,10 +36,7 @@ export default function ChatItem({
     >
       <View style={styles.container}>
         <View style={styles.chatContainer}>
-          <Image
-            source={require("../../assets/images/jerusalem.jpeg")}
-            style={styles.image}
-          />
+          <Image source={{ uri: profilePicture }} style={styles.image} />
           <View style={styles.chatContent}>
             <Text>
               {firstName} {lastName}
