@@ -19,11 +19,10 @@ export default function EditableInput({
   };
   const handleNotEdit = async () => {
     setIsEditable(false);
-    const formData = new FormData();
 
-    formData.append(id, value);
-
-    await updateUser(accessToken, formData);
+    await updateUser(accessToken, {
+      [id]: value,
+    });
   };
 
   return (

@@ -3,27 +3,25 @@ import { FaCamera } from "react-icons/fa";
 import { IoMdReturnLeft } from "react-icons/io";
 import EditableInput from "./EditableInput";
 import { useStore } from "../../libs/globalState";
-import { updateUser } from "../../libs/requests";
+import { updateProfilePicture } from "../../libs/requests";
 
 export default function Profile({ onClose }) {
   const { user, accessToken } = useStore();
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [status, setStatus] = useState(user.status);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(user.profilePicture);
+
+  console.log(image);
 
   const handleProfilePictureChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(URL.createObjectURL(e.target.files[0]));
 
       const formData = new FormData();
-      formData.append(
-        "profilePicture",
-        e.target.files[0],
-        e.target.files[0].name
-      );
+      formData.append("profilePicture", e.target.files[0]);
 
-      await updateUser(accessToken, formData);
+      await updateProfilePicture(accessToken, formData);
     }
   };
 
@@ -47,7 +45,7 @@ export default function Profile({ onClose }) {
           <div className="flex items-center justify-center py-7 select-none">
             <div className="relative w-[200px] h-[200px]">
               <img
-                src={image || user.profilePicture}
+                src={image}
                 alt="Avatar"
                 className="w-full h-full rounded-full transition-opacity duration-300"
               />

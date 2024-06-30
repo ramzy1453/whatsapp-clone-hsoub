@@ -38,8 +38,8 @@ export default function Home() {
       setTyping(false);
     });
 
-    socket.on("seen", (receiverId) => {
-      console.log("Seen");
+    socket.on("seen", (senderId) => {
+      console.log("Seen", senderId);
     });
 
     socket.on("user_updated", (updatedUser) => {

@@ -49,8 +49,18 @@ export const getUsers = async (accessToken) => {
   return response.data;
 };
 
-export const updateUser = async (accessToken, formData) => {
-  const response = await axios.put("/api/user", formData, {
+export const updateUser = async (accessToken, body) => {
+  const response = await axios.put("/api/user", body, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return response.data;
+};
+
+export const updateProfilePicture = async (accessToken, formData) => {
+  const response = await axios.put("/api/user/profile-picture", formData, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
