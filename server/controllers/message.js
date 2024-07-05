@@ -4,6 +4,11 @@ import StatusCodes from "http-status-codes";
 export const createMessage = async (req, res) => {
   const senderId = req.userId;
   const { receiverId, content } = req.body;
+  if (!content || content.trim() === "") {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      error: "Message content is required",
+    });
+  }
   const message = await Message.create({ senderId, receiverId, content });
 
   res.status(StatusCodes.CREATED).json(message);

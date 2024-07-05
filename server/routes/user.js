@@ -4,6 +4,7 @@ import {
   getUsers,
   login,
   register,
+  updateProfilePicture,
   updateUser,
 } from "../controllers/user.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
@@ -15,9 +16,10 @@ userRouter.post("/login", login);
 userRouter.post("/register", register);
 userRouter.get("/profile", isAuthenticated, getProfile);
 userRouter.get("/friends", isAuthenticated, getUsers);
+userRouter.put("/", isAuthenticated, updateUser);
 userRouter.put(
-  "/",
+  "/profile-picture",
   [isAuthenticated, upload.single("profilePicture")],
-  updateUser
+  updateProfilePicture
 );
 export default userRouter;

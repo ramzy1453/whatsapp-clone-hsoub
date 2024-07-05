@@ -1,6 +1,5 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import React from "react";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
 import ChatItem from "../../components/Chat/ChatItem";
 import { useStore } from "../../libs/globalState";
 

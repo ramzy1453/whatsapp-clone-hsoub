@@ -6,6 +6,7 @@ import { useStore } from "../../libs/globalState";
 import { getReceiverMessages } from "../../libs/filterMessages";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Messages() {
   const { messages, user, socket } = useStore();
@@ -19,6 +20,7 @@ export default function Messages() {
 
   const flatListRef = useRef(null);
 
+  console.log("ok");
   useEffect(() => {
     navigation.setOptions({ title: `${firstName} ${lastName}` });
   }, [routes.params.name]);

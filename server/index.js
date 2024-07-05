@@ -27,7 +27,7 @@ app.use(morgan("dev"));
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello world!");
 });
 
 app.use("/api/user", userRouter);
@@ -62,25 +62,21 @@ io.on("connection", async (socket) => {
     socket.to(receiverId).emit("stop_typing", socket.userId);
   });
 
-  async function getUsername(id) {
-    return await User.findById(id).select("firstName lastName").exec();
-  }
-  socket.on("seen", async (senderId) => {
-    const receiverId = socket.userId;
-    const receiverFullNameObject = await getUsername(receiverId);
-    const receiverFullName = `${receiverFullNameObject.firstName} ${receiverFullNameObject.lastName}`;
-    const senderFullNameObject = await getUsername(senderId);
-    const senderFullName = `${senderFullNameObject.firstName} ${senderFullNameObject.lastName}`;
-    console.log(
-      `User ${receiverFullName} has seen the messages from ${senderFullName}`
-    );
+  socket.on("seen", async (receiverId) => {
+    const senderId = socket.userId;
+
+    console.log(`Marking messages from ${senderId} as seen by ${receiverId}`);
+
     await Message.updateMany(
       { senderId, receiverId, seen: false },
       { seen: true },
       { multi: true }
     ).exec();
 
-    io.to(senderId).emit("seen", receiverId);
+    const messages = await Message.find({ senderId, receiverId, seen: false });
+    console.log(messages);
+
+    io.emit("seen", senderId);
   });
 
   socket.on("send_message", async ({ receiverId, content }) => {

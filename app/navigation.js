@@ -10,35 +10,28 @@ import { useStore } from "./libs/globalState";
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
-  const { setUser, setAccessToken, user, logout } = useStore();
+  const { setUser, setAccessToken, user, logout, accessToken } = useStore();
 
   useEffect(() => {
     const fetchData = async () => {
       const token = await AsyncStorage.getItem("accessToken");
-      const user = await AsyncStorage.getItem("user");
+      const jsonUser = await AsyncStorage.getItem("user");
 
       if (token) {
         setAccessToken(token);
       }
 
-      if (user) {
-        setUser(JSON.parse(user));
+      if (jsonUser) {
+        setUser(JSON.parse(jsonUser));
       }
     };
-    logout();
     fetchData();
   }, []);
 
-  const initialRouteName = user ? "Home" : "Login";
-  console.log({
-    initialRouteName,
-  });
   return (
     <Stack.Navigator
-      initialRouteName={initialRouteName}
-      screenOptions={{
-        headerShown: false,
-      }}
+      initialRouteName="Login"
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Chat from "./chat";
 import Community from "./community";
@@ -9,9 +9,7 @@ import { useEffect } from "react";
 import io from "socket.io-client";
 import { getMessages, getUsers } from "../../libs/requests";
 import Profile from "./profile";
-
-console.log({ expoApi: process.env.EXPO_PUBLIC_API_URL });
-const backendUrl = "http://192.168.1.8:8000" || "http://192.168.1.8:8000";
+import { API_URL } from "@env";
 
 const TopTab = createMaterialTopTabNavigator();
 
@@ -25,18 +23,17 @@ export default function Home() {
     updateFriend,
     setTyping,
     addFriend,
-    setCurrentReceiver,
     user,
     accessToken,
-    currentReceiver,
     messages,
   } = useStore();
 
   useEffect(() => {
-    const socket = io(backendUrl, {
+    const socket = io(API_URL, {
       query: "token=" + accessToken,
     });
 
+    console.log({ fromMenu: { ...user, accessToken } });
     socket.on("receive_message", (message) => {
       console.log("Received message", message);
       addMessage(message);
@@ -51,7 +48,7 @@ export default function Home() {
     });
 
     socket.on("seen", (senderId) => {
-      setMessages(senderId);
+      console.log(`Marking messages from ${senderId} as seen by ${user._id}`);
     });
 
     socket.on("user_updated", (updatedUser) => {
@@ -59,9 +56,6 @@ export default function Home() {
         setUser(updatedUser);
       } else {
         updateFriend(updatedUser);
-        if (currentReceiver?._id === updatedUser._id) {
-          setCurrentReceiver(updatedUser);
-        }
       }
     });
 
@@ -76,8 +70,6 @@ export default function Home() {
     const fetchData = async () => {
       const users = await getUsers(accessToken);
       const messages = await getMessages(accessToken);
-
-      console.log(users.length, messages.length);
 
       setFriends(users);
       setMessages(messages);

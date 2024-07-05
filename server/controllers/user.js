@@ -60,6 +60,7 @@ export const login = async (req, res) => {
 
   const accessToken = createToken(user._id);
 
+  console.log("login", user.profilePicture);
   res.status(StatusCodes.OK).json({
     message: "User logged in successfully",
     user,
@@ -69,19 +70,18 @@ export const login = async (req, res) => {
 
 export const getProfile = async (req, res) => {
   const userId = req.userId;
-  console.log(userId);
   const user = await User.findById(userId);
 
   user.password = undefined;
+  console.log("getProfile", user.profilePicture);
 
   res.status(StatusCodes.OK).json(user);
 };
 
 export const getUsers = async (req, res) => {
-  const userId = req.userId;
-  console.log(userId);
-
-  const users = await User.find({ _id: { $ne: userId } }).select("-password");
+  const users = await User.find({ _id: { $ne: req.userId } }).select(
+    "-password"
+  );
 
   res.status(StatusCodes.OK).json(users);
 };
@@ -89,11 +89,14 @@ export const getUsers = async (req, res) => {
 export const updateUser = async (req, res) => {
   const userId = req.userId;
   const { lastName, firstName, status } = req.body;
-  const profilePicture = `http://${hostname}:${port}/uploads/${req.file?.filename}`;
 
   const user = await User.findByIdAndUpdate(
     userId,
-    { lastName, firstName, status, profilePicture },
+    {
+      lastName,
+      firstName,
+      status,
+    },
     { new: true }
   );
 
@@ -101,7 +104,28 @@ export const updateUser = async (req, res) => {
 
   io.emit("user_updated", user);
 
-  res.status(StatusCodes.OK).json({
-    message: "User updated successfully",
-  });
+  res.status(StatusCodes.OK).json(user);
+};
+
+export const updateProfilePicture = async (req, res) => {
+  const userId = req.userId;
+
+  console.log(req.file);
+
+  const profilePicture = `http://${hostname}:${port}/uploads/${req.file?.filename}`;
+
+  const user = await User.findByIdAndUpdate(
+    userId,
+    {
+      profilePicture,
+    },
+    { new: true }
+  );
+
+  user.password = undefined;
+  console.log("updateUser", user.profilePicture);
+
+  io.emit("user_updated", user);
+
+  res.status(StatusCodes.OK).json(user);
 };

@@ -8,7 +8,6 @@ export const useStore = create((set) => ({
   friends: [],
   typing: null,
   input: "",
-  currentReceiver: {},
   messages: [],
   setSocket: (socket) => set({ socket }),
   setTyping: (typing) => set({ typing }),
@@ -23,7 +22,6 @@ export const useStore = create((set) => ({
       friends[index] = user;
       return { friends: [...friends] };
     }),
-
   setUser: async (user) => {
     if (user) {
       await AsyncStorage.setItem("user", JSON.stringify(user));
@@ -36,15 +34,13 @@ export const useStore = create((set) => ({
     }
     return set({ accessToken });
   },
+
   setInput: (input) => set({ input }),
   setMessages: (messages) => set({ messages }),
   addMessage: (message) => {
     return set(({ messages }) => {
       return { messages: [...messages, message] };
     });
-  },
-  setCurrentReceiver: (currentReceiver) => {
-    return set({ currentReceiver });
   },
   logout: async () => {
     await AsyncStorage.removeItem("accessToken");

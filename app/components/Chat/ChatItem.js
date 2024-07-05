@@ -17,7 +17,7 @@ export default function ChatItem({
   const contactMessages = getReceiverMessages(messages, _id);
   const lastMessage = contactMessages[contactMessages.length - 1];
 
-  const unreadMessages = contactMessages.filter(
+  const unreadMessages = contactMessages?.filter(
     (message) => !message.seen && message.receiverId !== _id
   ).length;
 

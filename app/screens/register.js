@@ -7,7 +7,6 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -25,9 +24,19 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useNavigation } from "@react-navigation/native";
 import { register } from "../libs/requests";
+import { useEffect } from "react";
+import { useStore } from "../libs/globalState";
 
 export default function Register() {
   const navigation = useNavigation();
+  const { user, accessToken, setAccessToken, setUser } = useStore();
+
+  useEffect(() => {
+    if (user && accessToken !== "") {
+      navigation.navigate("Home");
+    }
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -61,6 +70,7 @@ export default function Register() {
       });
     } else {
       const response = await register(formik.values);
+      console.log(response);
 
       if (response.error) {
         Toast.show({
@@ -78,6 +88,8 @@ export default function Register() {
         placement: "top",
       });
 
+      setUser(response.user);
+      setAccessToken(response.accessToken);
       navigation.navigate("Home");
     }
   };

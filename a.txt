@@ -1,0 +1,2 @@
+1 - when update username, picture disapear
+1 - 

@@ -1,9 +1,8 @@
 import axios from "axios";
 import * as FileSystem from "expo-file-system";
+import { API_URL } from "@env";
 
-// 172.25.10.100
-const baseURL = "http://192.168.1.8:8000";
-axios.defaults.baseURL = baseURL;
+axios.defaults.baseURL = API_URL;
 
 export const register = async ({
   lastName,
@@ -64,7 +63,7 @@ export const updateUser = async (accessToken, body) => {
 
 export const uploadImage = async (accessToken, imageUri) => {
   const response = FileSystem.uploadAsync(
-    `${baseURL}/api/user/profile-picture`,
+    `${API_URL}/api/user/profile-picture`,
     imageUri,
     {
       httpMethod: "PUT",

@@ -17,11 +17,18 @@ import * as Yup from "yup";
 import { login } from "../libs/requests";
 import { useStore } from "../libs/globalState";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useEffect } from "react";
 
 export default function Login() {
   const navigation = useNavigation();
-  const { setAccessToken, setUser, user } = useStore();
-  console.log({ fromLogin: user });
+  const { setAccessToken, setUser, user, accessToken } = useStore();
+
+  useEffect(() => {
+    if (user && accessToken !== "") {
+      navigation.navigate("Home");
+    }
+  }, [user, accessToken]);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -59,16 +66,14 @@ export default function Login() {
         return;
       }
 
-      const { user, accessToken, message } = response;
-
       Toast.show({
-        title: message,
+        title: response.message,
         status: "success",
         backgroundColor: "#0e806a",
         placement: "top",
       });
-      setUser(user);
-      setAccessToken(accessToken);
+      setUser(response.user);
+      setAccessToken(response.accessToken);
       navigation.navigate("Home");
     }
   };
