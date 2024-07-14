@@ -37,6 +37,7 @@ app.use("/api/message", isAuthenticated, messageRouter);
 connectDB();
 connectServer(server);
 
+// Websocket
 export const io = new Server(server, {
   cors: {
     origin: "*",
