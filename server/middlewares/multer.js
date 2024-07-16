@@ -3,7 +3,7 @@ import path from "path";
 
 const storage = multer.diskStorage({
   destination: "public/uploads/",
-  filename: (req, file, cb) => {
+  filename(req, file, cb) {
     cb(null, file.originalname);
   },
 });
@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   limits: { fileSize: 1024 * 1024 },
   storage: storage,
-  fileFilter: (req, file, cb) => {
+  fileFilter(req, file, cb) {
     const fileTypes = /jpeg|jpg|png/;
     const mimeType = fileTypes.test(file.mimetype);
     const extname = fileTypes.test(

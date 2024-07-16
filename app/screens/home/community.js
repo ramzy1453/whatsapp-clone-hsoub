@@ -1,7 +1,9 @@
 import { Button, Image, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 
-export default function Community({ navigation }) {
+export default function Community() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View
