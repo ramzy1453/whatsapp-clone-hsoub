@@ -16,11 +16,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 export default function Profile() {
   const { user, accessToken } = useStore();
-  const { lastName, firstName, email, profilePicture: pp, status } = user;
+  const { lastName, firstName, email, profilePicture, status } = user;
   const actualStatus = status || "No status";
-  const profilePicture = pp.replace("localhost", "192.168.1.8");
-
-  console.log("change occured", profilePicture);
 
   // Stores the selected image URI
   const [file, setFile] = useState(profilePicture);

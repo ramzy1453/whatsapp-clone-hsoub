@@ -8,7 +8,7 @@ export default function ChatItem({
   _id,
   firstName,
   lastName,
-  profilePicture: pp,
+  profilePicture,
   createdAt,
 }) {
   const navigation = useNavigation();
@@ -21,7 +21,6 @@ export default function ChatItem({
     (message) => !message.seen && message.receiverId !== _id
   ).length;
 
-  const profilePicture = pp.replace("localhost", "192.168.1.8");
   return (
     <TouchableOpacity
       onPress={() => {
