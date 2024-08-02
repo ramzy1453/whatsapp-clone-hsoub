@@ -4,7 +4,7 @@ import "dotenv/config";
 // Connect MongoDB at mongoURL or default port 27017.
 export const connectDB = () => {
   const MONGODB_URL = process.env.MONGODB_URL;
-  mongoose.connect(MONGODB_URL, { useNewUrlParser: true }, (error) => {
+  mongoose.connect(MONGODB_URL, (error) => {
     if (!error) {
       console.log("MongoDB Connection Succeeded.");
     } else {

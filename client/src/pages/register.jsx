@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import logoHsoub from "../assets/hsoub.png";
 import { register } from "../libs/requests";
 import { useStore } from "../libs/globalState";
@@ -31,8 +31,7 @@ export default function Register() {
         .required("Confirm Password is required")
         .oneOf([Yup.ref("password"), null], "Passwords must match"),
     }),
-
-    onSubmit: async (values) => {
+    async onSubmit(values) {
       const response = await register(values);
       if (response.error) {
         alert(response.error);
