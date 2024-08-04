@@ -33,6 +33,7 @@ export default function Home() {
 
     socket.on("disconnect", () => {
       console.log("Disconnected from the server");
+      setSocket(null);
     });
 
     socket.on("receive_message", (message) => {
@@ -81,7 +82,6 @@ export default function Home() {
 
     return () => {
       socket.disconnect();
-      setSocket(null);
     };
   }, []);
 
