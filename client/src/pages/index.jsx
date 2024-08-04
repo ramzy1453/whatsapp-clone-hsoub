@@ -26,6 +26,15 @@ export default function Home() {
     const socket = io(process.env.REACT_APP_API_URL, {
       query: "token=" + accessToken,
     });
+
+    socket.on("connect", () => {
+      console.log(`Connected to the server with the id: ${socket.id}`);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from the server");
+    });
+
     socket.on("receive_message", (message) => {
       addMessage(message);
     });
@@ -72,6 +81,7 @@ export default function Home() {
 
     return () => {
       socket.disconnect();
+      setSocket(null);
     };
   }, []);
 

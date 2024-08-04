@@ -12,7 +12,6 @@ import isAuthenticated, {
 import messageRouter from "./routes/message.js";
 import { Server } from "socket.io";
 import Message from "./models/Message.js";
-import User from "./models/User.js";
 
 // Server
 const app = express();
@@ -86,5 +85,13 @@ io.on("connection", async (socket) => {
     const message = await Message.create({ senderId, receiverId, content });
 
     io.to([receiverId, senderId]).emit("receive_message", message);
+  });
+});
+
+io.on("connection", async (socket) => {
+  console.log(`user connected: ${socket.id}`);
+
+  socket.on("disconnect", () => {
+    console.log(`user disconnected: ${socket.id}`);
   });
 });
