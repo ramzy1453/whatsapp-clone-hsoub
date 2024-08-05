@@ -73,10 +73,7 @@ io.on("connection", async (socket) => {
       { multi: true }
     ).exec();
 
-    const messages = await Message.find({ senderId, receiverId, seen: false });
-    console.log(messages);
-
-    io.emit("seen", senderId);
+    io.to(senderId).emit("seen", senderId);
   });
 
   socket.on("send_message", async ({ receiverId, content }) => {
