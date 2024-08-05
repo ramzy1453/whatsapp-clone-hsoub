@@ -1,7 +1,7 @@
 import "dotenv/config";
 import StatusCodes from "http-status-codes";
 import { verifyToken } from "../utils/jwt.js";
-
+import jwt from "jsonwebtoken";
 export default async function isAuthenticated(req, res, next) {
   const authHeaders = req.headers.authorization;
 
@@ -28,8 +28,8 @@ export const isSocketAuthenticated = (socket, next) => {
   }
 
   try {
-    const payload = verifyToken(socket.handshake.query.token);
-    socket.userId = payload.userId;
+    const data = jwt.verify(socket.handshake.query.token);
+    socket.userId = data.userId;
     next();
   } catch (error) {
     next(error);

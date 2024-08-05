@@ -76,7 +76,6 @@ export const getProfile = async (req, res) => {
   const user = await User.findById(userId);
 
   user.password = undefined;
-  console.log("getProfile", user.profilePicture);
 
   res.status(StatusCodes.OK).json(user);
 };
@@ -113,8 +112,6 @@ export const updateUser = async (req, res) => {
 export const updateProfilePicture = async (req, res) => {
   const userId = req.userId;
 
-  console.log(req.file);
-
   const profilePicture = `http://${hostname}:${port}/uploads/${req.file?.filename}`;
 
   const user = await User.findByIdAndUpdate(
@@ -126,7 +123,6 @@ export const updateProfilePicture = async (req, res) => {
   );
 
   user.password = undefined;
-  console.log("updateUser", user.profilePicture);
 
   io.emit("user_updated", user);
 

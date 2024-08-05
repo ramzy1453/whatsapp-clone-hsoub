@@ -4,13 +4,12 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function ChatFooter() {
-  const { input, setInput, accessToken, socket } = useStore();
+  const { input, setInput, socket } = useStore();
   const { pathname: receiverId } = useLocation();
 
   const sendMessage = () => {
     if (input) {
       socket.emit("send_message", {
-        accessToken,
         receiverId: receiverId.slice(1),
         content: input,
       });
@@ -18,14 +17,12 @@ export default function ChatFooter() {
     }
   };
   useEffect(() => {
-    if (socket) {
-      if (input) {
-        socket.emit("typing", receiverId.slice(1));
-      } else {
-        socket.emit("stop_typing", receiverId.slice(1));
-      }
+    if (socket && input) {
+      socket.emit("typing", receiverId.slice(1));
+    } else {
+      socket.emit("stop_typing", receiverId.slice(1));
     }
-  }, [socket, input]);
+  }, [input, socket, receiverId]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {

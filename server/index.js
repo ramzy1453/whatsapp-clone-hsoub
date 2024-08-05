@@ -87,11 +87,3 @@ io.on("connection", async (socket) => {
     io.to([receiverId, senderId]).emit("receive_message", message);
   });
 });
-
-io.on("connection", async (socket) => {
-  console.log(`user connected: ${socket.id}`);
-
-  socket.on("disconnect", () => {
-    console.log(`user disconnected: ${socket.id}`);
-  });
-});

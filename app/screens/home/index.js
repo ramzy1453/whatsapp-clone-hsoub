@@ -33,7 +33,6 @@ export default function Home() {
       query: "token=" + accessToken,
     });
 
-    console.log({ fromMenu: { ...user, accessToken } });
     socket.on("receive_message", (message) => {
       console.log("Received message", message);
       addMessage(message);
