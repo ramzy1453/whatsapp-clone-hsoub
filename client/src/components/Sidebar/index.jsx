@@ -20,14 +20,18 @@ export default function Sidebar() {
   const [showUnSeenMessages, setShowUnSeenMessages] = useState(false);
   const [query, setQuery] = useState("");
 
+  // وظيفة لتصفية جهات الاتصال بناءً على البحث
   const handleSearch = ({ lastName, firstName }) => {
-    const fullName = `${firstName} ${lastName}`;
+    const fullName = `${firstName} ${lastName}`; // إنشاء الاسم الكامل من الاسم الأول واسم العائلة
+    // التحقق مما إذا كان الاسم الكامل يحتوي على النص المدخل في البحث
     return fullName.toLowerCase().includes(query.toLowerCase().trim());
   };
 
+  // وظيفة لتصفية جهات الاتصال بناءً على الرسائل غير المقروءة
   const unseenMessagesContacts = (contact) => {
-    if (!showUnSeenMessages) return true;
-    const contactMessages = getReceiverMessages(messages, contact._id);
+    if (!showUnSeenMessages) return true; // إذا لم يتم تفعيل خيار عرض الرسائل غير المقروءة، إرجاع جميع جهات الاتصال
+    const contactMessages = getReceiverMessages(messages, contact._id); // الحصول على رسائل جهة الاتصال المحددة
+    // التحقق مما إذا كانت جهة الاتصال تحتوي على رسائل غير مقروءة
     const containUnseenMessages = contactMessages.some(
       (message) => !message.seen
     );

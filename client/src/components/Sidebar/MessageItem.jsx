@@ -20,10 +20,15 @@ const MessageItem = ({
   ).length;
 
   const onClick = () => {
+    // تعيين الرسالة النشطة
     setActifMessage();
+    // تعيين المستلم الحالي
     setCurrentReceiver();
+    // التنقل إلى صفحة المحادثة الجديدة
     navigate(`/${id}`);
+    // إرسال حدث "seen" إلى الخادم
     socket?.emit("seen", id);
+    // تحديث حالة الرسائل محلياً لتعريفها بأنها "مرئية"
     setMessages(messages.map((message) => ({ ...message, seen: true })));
   };
 

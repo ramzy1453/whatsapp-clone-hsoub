@@ -27,7 +27,7 @@ export default function EditableInput({
 
   return (
     <div>
-      <label htmlFor="fullName" className="text-[#005C4B]">
+      <label htmlFor={"fullName"} className="text-[#005C4B]">
         {label}
       </label>
       <div className="relative">
@@ -61,3 +61,4 @@ export default function EditableInput({
     </div>
   );
 }
+

@@ -63,17 +63,21 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("seen", async (receiverId) => {
+    // نحصل على معرف المرسل من الاتصال الحالي
     const senderId = socket.userId;
 
+    // نطبع رسالة في وحدة التحكم لتوضيح أن الرسائل من المرسل تم وضع علامة "مقروءة" من قبل المستقبل
     console.log(`Marking messages from ${senderId} as seen by ${receiverId}`);
 
+    // نقوم بتحديث حالة جميع الرسائل التي لم تُقرأ بعد
     await Message.updateMany(
-      { senderId, receiverId, seen: false },
-      { seen: true },
-      { multi: true }
+      { senderId, receiverId, seen: false }, // تحديد الرسائل التي لم تُقرأ بعد
+      { seen: true }, // تحديث الحالة إلى "مقروءة"
+      { multi: true } // تحديد أنه يجب تحديث جميع الرسائل المطابقة
     ).exec();
 
-    io.to(senderId).emit("seen", senderId);
+    // نرسل حدث "seen" إلى جميع العملاء لتحديث حالة الرسائل لديهم
+    io.emit("seen", senderId);
   });
 
   socket.on("send_message", async ({ receiverId, content }) => {

@@ -11,17 +11,15 @@ export default function Profile({ onClose }) {
   const [lastName, setLastName] = useState(user.lastName);
   const [status, setStatus] = useState(user.status);
   const [image, setImage] = useState(user.profilePicture);
-
-  console.log(image);
-
+  
   const handleProfilePictureChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(URL.createObjectURL(e.target.files[0]));
+      setImage(URL.createObjectURL(e.target.files[0])); // عرض معاينة فورية للصورة المختارة
 
-      const formData = new FormData();
-      formData.append("profilePicture", e.target.files[0]);
+      const formData = new FormData(); // إنشاء كائن FormData لإرسال الملف
+      formData.append("profilePicture", e.target.files[0]); // إضافة الملف إلى النموذج
 
-      await updateProfilePicture(accessToken, formData);
+      await updateProfilePicture(accessToken, formData); // إرسال الطلب إلى الخادم
     }
   };
 
