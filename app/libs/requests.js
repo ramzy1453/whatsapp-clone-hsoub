@@ -62,7 +62,7 @@ export const updateUser = async (accessToken, body) => {
 };
 
 export const uploadImage = async (accessToken, imageUri) => {
-  const response = FileSystem.uploadAsync(
+  const response = await FileSystem.uploadAsync(
     `${API_URL}/api/user/profile-picture`,
     imageUri,
     {
