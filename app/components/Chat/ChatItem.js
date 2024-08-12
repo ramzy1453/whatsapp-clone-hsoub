@@ -67,6 +67,48 @@ export default function ChatItem({
   );
 }
 
+function ChatItem(props) {
+  const navigation = useNavigation();
+  const { _id, firstName, lastName, profilePicture, createdAt } = props;
+  const unreadMessages = 7;
+
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        socket?.emit("seen", _id);
+        navigation.navigate("Messages", {
+          _id,
+          firstName,
+          lastName,
+          profilePicture,
+        });
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.chatContainer}>
+          <Image source={{ uri: profilePicture }} style={styles.image} />
+          <View style={styles.chatContent}>
+            <Text>
+              {firstName} {lastName}
+            </Text>
+            <Text style={styles.lastMessage}>{"Start the discussion..."}</Text>
+          </View>
+        </View>
+        <View style={styles.unreadMessageContainer}>
+          <Text>{moment(createdAt).format("hh:mm A")}</Text>
+          {unreadMessages > 0 && (
+            <View style={styles.unreadMessages}>
+              <Text style={{ color: "white" }}>
+                {unreadMessages < 9 ? unreadMessages : "+9"}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",

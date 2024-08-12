@@ -1,4 +1,4 @@
-import { StyleSheet, Image, View, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import {
   Box,
   Text,

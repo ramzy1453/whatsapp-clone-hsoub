@@ -1,12 +1,4 @@
-import {
-  StyleSheet,
-  Keyboard,
-  KeyboardAvoidingView,
-  View,
-  Image,
-  Platform,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Keyboard, View, Image } from "react-native";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {

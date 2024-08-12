@@ -80,8 +80,6 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {}, [messages]);
-
   return (
     <>
       <Header />
