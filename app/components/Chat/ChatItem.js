@@ -4,13 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import { getReceiverMessages } from "../../libs/filterMessages";
 import { useStore } from "../../libs/globalState";
 
-export default function ChatItem({
-  _id,
-  firstName,
-  lastName,
-  profilePicture,
-  createdAt,
-}) {
+export default function ChatItem(props) {
+  const { _id, firstName, lastName, profilePicture, createdAt } = props;
   const navigation = useNavigation();
   const { messages, socket } = useStore();
 

@@ -25,7 +25,6 @@ export default function Home() {
     addFriend,
     user,
     accessToken,
-    messages,
   } = useStore();
 
   useEffect(() => {

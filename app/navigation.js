@@ -10,7 +10,7 @@ import { useStore } from "./libs/globalState";
 const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
-  const { setUser, setAccessToken, user, logout, accessToken } = useStore();
+  const { setUser, setAccessToken } = useStore();
 
   useEffect(() => {
     const fetchData = async () => {

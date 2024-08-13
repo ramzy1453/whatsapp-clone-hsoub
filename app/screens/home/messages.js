@@ -20,7 +20,6 @@ export default function Messages() {
 
   const flatListRef = useRef(null);
 
-  console.log("ok");
   useEffect(() => {
     navigation.setOptions({ title: `${firstName} ${lastName}` });
   }, [routes.params.name]);
