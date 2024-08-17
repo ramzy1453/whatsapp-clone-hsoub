@@ -1,15 +1,14 @@
-import { StyleSheet } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Chat from "./chat";
-import Community from "./community";
-import { MaterialCommunityIcons } from "react-native-vector-icons";
-import Header from "../../components/Header";
-import { useStore } from "../../libs/globalState";
 import { useEffect } from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { MaterialCommunityIcons } from "react-native-vector-icons";
 import io from "socket.io-client";
-import { getMessages, getUsers } from "../../libs/requests";
-import Profile from "./profile";
 import { API_URL } from "@env";
+import { useStore } from "../../libs/globalState";
+import { getMessages, getUsers } from "../../libs/requests";
+import Chat from "./chat";
+import Header from "../../components/Header";
+import Community from "./community";
+import Profile from "./profile";
 
 const TopTab = createMaterialTopTabNavigator();
 
