@@ -1,15 +1,14 @@
 import { StyleSheet, LogBox, FlatList } from "react-native";
-import React, { useEffect, useRef } from "react";
-import MessageItem from "../../components/Chat/MessageItem";
-import MessageFooter from "../../components/Chat/MessageFooter";
+import { useEffect, useRef } from "react";
 import { useStore } from "../../libs/globalState";
 import { getReceiverMessages } from "../../libs/filterMessages";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import MessageItem from "../../components/Chat/MessageItem";
+import MessageFooter from "../../components/Chat/MessageFooter";
 
 export default function Messages() {
-  const { messages, user, socket } = useStore();
+  const { messages, user } = useStore();
 
   const routes = useRoute();
   const navigation = useNavigation();
@@ -22,7 +21,7 @@ export default function Messages() {
 
   useEffect(() => {
     navigation.setOptions({ title: `${firstName} ${lastName}` });
-  }, [routes.params.name]);
+  }, [firstName]);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);

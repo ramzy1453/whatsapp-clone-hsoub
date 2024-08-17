@@ -1,15 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import { useEffect } from "react";
-import { useStore } from "../../libs/globalState";
 
-export default function MessageItem({
-  _id,
-  content,
-  createdAt,
-  seen,
-  isSender,
-}) {
+export default function MessageItem({ content, createdAt, seen, isSender }) {
   return (
     <View
       style={[

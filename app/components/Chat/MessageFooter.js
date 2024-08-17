@@ -1,12 +1,10 @@
 import {
   View,
   TextInput,
-  Pressable,
-  Text,
   StyleSheet,
   KeyboardAvoidingView,
 } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useStore } from "../../libs/globalState";
 
