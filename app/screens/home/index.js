@@ -99,7 +99,7 @@ export default function Home() {
           name="Community"
           component={Community}
           options={{
-            tabBarLabelStyle: styles.tabBarLabelStyle,
+            tabBarLabelStyle: { display: "none" },
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
                 name="account-group"
@@ -115,9 +115,3 @@ export default function Home() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  tabBarLabelStyle: {
-    display: "none",
-  },
-});
