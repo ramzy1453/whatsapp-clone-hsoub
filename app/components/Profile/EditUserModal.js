@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { useRef } from "react";
 import { Button, FormControl, Input, Modal } from "native-base";
 import { useFormik } from "formik";
@@ -7,8 +6,8 @@ import { updateUser } from "../../libs/requests";
 import { useStore } from "../../libs/globalState";
 
 export default function EditUserModal({ modalVisible, closeModal }) {
-  const initialRef = useRef(null);
-  const finalRef = useRef(null);
+  const initialModalRef = useRef(null);
+  const finalModalRef = useRef(null);
   const { accessToken, user, setUser } = useStore();
 
   const formik = useFormik({
@@ -33,8 +32,8 @@ export default function EditUserModal({ modalVisible, closeModal }) {
     <Modal
       isOpen={modalVisible}
       onClose={closeModal}
-      initialFocusRef={initialRef}
-      finalFocusRef={finalRef}
+      initialFocusRef={initialModalRef}
+      finalFocusRef={finalModalRef}
       avoidKeyboard
     >
       <Modal.Content>
@@ -90,5 +89,3 @@ export default function EditUserModal({ modalVisible, closeModal }) {
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({});
