@@ -22,9 +22,6 @@ export default function Profile() {
   // Stores the selected image URI
   const [file, setFile] = useState(profilePicture);
 
-  // Stores any error message
-  const [error, setError] = useState(null);
-
   const [modalVisible, setModalVisible] = useState(false);
   const closeModal = () => {
     setModalVisible(false);
@@ -59,9 +56,6 @@ export default function Profile() {
         setFile(localUri);
 
         const response = await uploadImage(accessToken, localUri);
-
-        // Clear any previous errors
-        setError(null);
       }
     }
   };
