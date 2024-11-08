@@ -1,4 +1,4 @@
-import { StyleSheet, LogBox, FlatList } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { useEffect, useRef } from "react";
 import { useStore } from "../../libs/globalState";
 import { getReceiverMessages } from "../../libs/filterMessages";
@@ -22,10 +22,6 @@ export default function Messages() {
   useEffect(() => {
     navigation.setOptions({ title: `${firstName} ${lastName}` });
   }, [firstName]);
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>

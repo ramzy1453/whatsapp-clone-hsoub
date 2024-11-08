@@ -1,24 +1,18 @@
 import "dotenv/config";
-import StatusCodes from "http-status-codes";
-import { verifyToken } from "../utils/jwt.js";
 import jwt from "jsonwebtoken";
-export default async function isAuthenticated(req, res, next) {
-  const authHeaders = req.headers.authorization;
 
-  if (!authHeaders || !authHeaders.startsWith("Bearer")) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "Authentication invalid" });
+export default async function isAuthenticated(req, res, next) {
+  const token = req.headers.authorization;
+
+  if (!authHeaders) {
+    return token.send({ message: "Authentication invalid" });
   }
-  const token = authHeaders.replace("Bearer ", "");
   try {
-    const payload = verifyToken(token);
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = payload.userId;
     next();
   } catch (error) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "Authentication invalid" });
+    return res.send({ message: "Authentication invalid" });
   }
 }
 
