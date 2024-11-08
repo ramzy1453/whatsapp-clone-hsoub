@@ -13,9 +13,9 @@ export const connectDB = () => {
   });
 };
 
-// Connect Server at default port 8000.
+// Connect Server at default port 5000.
 export const connectServer = (app) => {
-  const PORT = process.env.PORT || 8000;
+  const PORT = process.env.PORT || 5000;
   try {
     app.listen(PORT, () => console.log(`Server running on PORT ${PORT}.`));
   } catch (error) {
